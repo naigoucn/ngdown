@@ -1,0 +1,9 @@
+{
+    "keywords": {
+        "hello": "你好！欢迎使用我们的服务。",
+        "help": "如果您有任何问题，请随时联系我们。",
+        "xhelp": "如果您有任何问题，请随时联系我们。",
+        "最新": "最新的文章标题是：{latest_post_title}。\n点击以下链接阅读：\n{latest_post_url}"
+    },
+    "subscribe_message": "欢迎关注『奶狗』公众号[玫瑰]\n回复[ID文章ID]获取下载密码，例如 ID123\n回复[最新]或[推送最新文章]查看最新文章\n—— naigou.cn"
+}
