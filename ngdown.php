@@ -216,7 +216,7 @@ function custom_button_display_button($content) {
                         <?php else: ?>
                             <div id="get_download_link_button" 
                                  class="but file-download-btn"  
-                                 style="background-color: #4e6ef2; !important; box-shadow: 0 2px 8px #006eff33;"
+                                 style="background-color: #4e6ef2; !important; color: #fff;"
                                  onclick="openPopup()">
                                 获取下载链接
                             </div>
@@ -239,7 +239,7 @@ function custom_button_display_button($content) {
                             <?php foreach ($alternate_links as $index => $alt_link): ?>
                                 <?php if (!empty($alt_link)): ?>
                                     <div class="small-link">
-                                        <a href="<?php echo esc_url($alt_link); ?>" class="small-link-button" target="_blank">
+                                        <a href="<?php echo esc_url($alt_link); ?>" class="small-link-button" style="color: #fff;" target="_blank">
                                             <?php echo esc_html(get_link_label($alt_link)); ?>
                                         </a>
                                         <?php if (!empty($alternate_codes[$index])): ?>
@@ -256,52 +256,56 @@ function custom_button_display_button($content) {
                 <!-- 弹窗结构 -->
                 <div id="myModal" class="modal">
                     <div class="modal-content">
-                        <div class="tab-container">
-                          <button class="tab active" data-tab="wechat">
+                        <div class="ngtab-container">
+                          <button class="ngtab active" data-tab="wechat">
                               <i class="ri-wechat-line"></i>
                           </button>
-                          <button class="tab" data-tab="qq">
+                          <button class="ngtab" data-tab="qq">
                               <i class="ri-qq-line"></i>
                           </button>
-                          <button class="tab" data-tab="tg">
+                          <button class="ngtab" data-tab="tg">
                               <i class="ri-telegram-2-line"></i>
                           </button>
                         </div>
 
-                        <div id="wechat_tab_content" class="tab-content active" >
+                        <div id="wechat_tab_content" class="ngtab-content active" >
                             <div class="qr-container">
                                 <img src="<?php echo plugins_url('img/wechat_qr.png', __FILE__); ?>" alt="WeChat QR Code">
                             </div>
                             <p style="font-size: 12px; color: #888;">
                                 获取密码请关注公众号回复<br>
-                                <strong><span style="color: blue;">ID<?php echo esc_html($post->ID); ?></span></strong> 
+                                <strong><span id="copy-id-<?php echo esc_js(json_encode($post->ID)); ?>" style="color: blue; cursor: pointer;" onclick="copyToClipboard(this)">ID<?php echo esc_html($post->ID); ?></span></strong> 
                             </p>
                         </div>
-                        <div id="qq_tab_content" class="tab-content">
+                        <div id="qq_tab_content" class="ngtab-content">
                             <div class="qr-container">
                                 <img src="<?php echo plugins_url('img/qq_qr.png', __FILE__); ?>" alt="QQ QR Code">
                             </div>
                             <p style="font-size: 12px; color: #888;">
                                 获取密码请扫码加群发送消息<br>
-                                <strong><span style="color: green;">/文章密码 <?php echo esc_html($post->ID); ?></span></strong>
+                                <strong><span id="copy-password-<?php echo esc_js(json_encode($post->ID)); ?>" style="color: green; cursor: pointer;" onclick="copyToClipboard(this)"><?php echo esc_html('/文章密码 '); ?><?php echo esc_html($post->ID); ?></span></strong>
                             </p>
                         </div>
-                        <div id="tg_tab_content" class="tab-content">
+                        
+                        <div id="tg_tab_content" class="ngtab-content">
                             <div class="qr-container">
-                                <img src="<?php echo plugins_url('img/tg.png', __FILE__); ?>" alt="TG QR Code">
+                                <img src="<?php echo plugins_url('img/tg_qr.png', __FILE__); ?>" alt="TG QR Code">
                             </div>
                             <p style="font-size: 12px; color: #888;">
-                                获取密码请扫码加入频道发送消息<br>
-                                <strong><span style="color: green;">/article-password <?php echo esc_html($post->ID); ?></span></strong>
+                                获取密码请扫码加群发送消息<br>
+                                <strong><span id="copy-password-<?php echo esc_js(json_encode($post->ID)); ?>" style="color: pink; cursor: pointer;" onclick="copyToClipboard(this)"><?php echo esc_html('/文章密码 '); ?><?php echo esc_html($post->ID); ?></span></strong>
                             </p>
                         </div>
-                        <input type="text" id="download_password_input" style="width: calc(100% - 22px); padding: 10px; margin-top: 10px; border: 1px solid #ccc; border-radius: 5px;" placeholder="密码">
-                        <div id="submit_password_button" 
-                             style="background-color: #4e6ef2; color: white; padding: 10px; border: none; border-radius: 5px; cursor: pointer; margin-top: 10px; width: calc(100% - 22px); display: inline-block; text-align: center;"
+                        
+                        <input type="text" id="download_password_input" style="width: calc(100% - 22px); padding: 5px; margin-top: 5px; border: 1px solid #ccc; border-radius: 3px;" placeholder="密码">
+                         <div id="submit_password_button" 
+                             style="background-color: #4e6ef2; color: white; padding: 5px; border: none; border-radius: 3px; cursor: pointer; margin-top: 10px; width: calc(100% - 22px); display: inline-block; text-align: center;"
                              onclick="handleSubmit()">
                             提交
                         </div>
+                        
                         <div id="password_error_message" style="color: red; margin-top: 10px; display: none;"></div>
+                        <div id="copy_success_message" style="color: green; margin-top: 10px; display: none;"></div>
                     </div>
                 </div>
                 <script>
@@ -338,26 +342,24 @@ function custom_button_display_button($content) {
                                     // 刷新页面以显示下载按钮和提取码按钮
                                     location.reload();
                                 } else {
-                                    document.getElementById('password_error_message').textContent = '密码错误，请重试。';
-                                    document.getElementById('password_error_message').style.display = 'block';
+                                    showErrorMessage('密码错误，请重试。');
                                 }
                             })
                             .catch(error => console.error('Error:', error));
                         } else {
-                            document.getElementById('password_error_message').textContent = '请输入密码。';
-                            document.getElementById('password_error_message').style.display = 'block';
+                            showErrorMessage('请输入密码。');
                         }
                     }
 
                     function setupEventListeners() {
                         // Tab切换功能
-                        const tabs = document.querySelectorAll('.tab');
+                        const tabs = document.querySelectorAll('.ngtab');
                         tabs.forEach(tab => {
                             tab.addEventListener('click', function() {
                                 const targetTabContentId = this.getAttribute('data-tab') + '_tab_content';
                                 
                                 tabs.forEach(t => t.classList.remove('active'));
-                                document.querySelectorAll('.tab-content').forEach(tc => tc.classList.remove('active'));
+                                document.querySelectorAll('.ngtab-content').forEach(tc => tc.classList.remove('active'));
 
                                 this.classList.add('active');
                                 document.getElementById(targetTabContentId).classList.add('active');
@@ -371,6 +373,34 @@ function custom_button_display_button($content) {
                                 closePopup();
                             }
                         }
+                    }
+
+                    function copyToClipboard(element) {
+                        const tempInput = document.createElement('textarea');
+                        tempInput.value = element.textContent.trim();
+                        document.body.appendChild(tempInput);
+                        tempInput.select();
+                        document.execCommand('copy');
+                        document.body.removeChild(tempInput);
+                        showSuccessMessage('已复制到剪贴板: ' + element.textContent.trim());
+                    }
+
+                    function showSuccessMessage(message) {
+                        var successMessage = document.getElementById('copy_success_message');
+                        successMessage.textContent = message;
+                        successMessage.style.display = 'block';
+                        setTimeout(function() {
+                            successMessage.style.display = 'none';
+                        }, 1000);
+                    }
+
+                    function showErrorMessage(message) {
+                        var errorMessage = document.getElementById('password_error_message');
+                        errorMessage.textContent = message;
+                        errorMessage.style.display = 'block';
+                        setTimeout(function() {
+                            errorMessage.style.display = 'none';
+                        }, 1000);
                     }
 
                     window.onload = function() {
