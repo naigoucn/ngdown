@@ -4,9 +4,8 @@
 
 这是一个用于WordPress的附件密码下载插件，支持对接微信公众号、多平台机器人（QQ/TG等）、AI大模型等功能。程序永久免费且开源。
 
-🔗 [作者博客原文](https://www.naigou.cn/ngdown) 
 🔗 [GitHub仓库](https://github.com/naigoucn/ngdown)  
-📥 [旧版本下载](https://www.123684.com/s/uXJuVv-mN4U3)  
+📥 [作者博客原文](https://www.naigou.cn/ngdown)  
 🎨 界面参考：[6KE论坛样式](https://6ke.li/forum-post/1048.html)  
 🤖 机器人参考：[微信机器人1](http://github.com/wangvsa/wechat-robot)、[微信机器人2](https://github.com/shiheme/wechat-robot-guoqing)  
 🖼️ 图标库：[RemixIcon](https://remixicon.com)
@@ -48,3 +47,4 @@
 ![文章设置示例](https://ttimg.cn/cdn/naigou_cn/2025/02/20250225112506405.png)
 
 ---
+：
