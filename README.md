@@ -47,18 +47,6 @@
 ![文章设置示例](https://ttimg.cn/cdn/naigou_cn/2025/02/20250225112506405.png)
 
 ---
-
-### 微信公众号对接
-
-#### 配置步骤
-1. 获取开发者凭证：
-   - 登录[微信公众平台](https://mp.weixin.qq.com)
-   - 进入「开发」-「基本配置」
-   - 获取AppID和AppSecret
-
-![开发者凭证获取](https://ttimg.cn/cdn/naigou_cn/2025/02/20250209021443491.png)
-
-2. 服务器配置：
 <h3 class="wp-block-heading">TG机器人</h3>
 <!-- /wp:heading -->
 
