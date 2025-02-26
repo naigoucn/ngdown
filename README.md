@@ -47,9 +47,3 @@
 ![文章设置示例](https://ttimg.cn/cdn/naigou_cn/2025/02/20250225112506405.png)
 
 ---
-<h3 class="wp-block-heading">TG机器人</h3>
-<!-- /wp:heading -->
-
-<!-- wp:paragraph -->
-<p>部分框架提供对接其他平台的功能 参考QQ机器人的对接方式</p>
-<!-- /wp:paragraph -->
