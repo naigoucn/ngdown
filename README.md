@@ -3,6 +3,7 @@
 ## 前言
 
 这是一个用于WordPress的附件密码下载插件，支持对接微信公众号、多平台机器人（QQ/TG等）、AI大模型等功能。程序永久免费且开源。
+
 🔗 [作者博客原文](https://www.naigou.cn/ngdown) 
 🔗 [GitHub仓库](https://github.com/naigoucn/ngdown)  
 📥 [旧版本下载](https://www.123684.com/s/uXJuVv-mN4U3)  
